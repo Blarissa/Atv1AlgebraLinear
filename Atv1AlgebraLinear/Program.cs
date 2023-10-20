@@ -19,7 +19,7 @@ internal class Program
         //Matriz1 elevada por 3
         var matriz3 = PotenciaDeMatriz(matriz1, 3);
 
-        var opcao1 = -1;
+        var opcao1 = -1;        
 
         while (opcao1 != 0) {
             Console.WriteLine(
@@ -39,7 +39,7 @@ internal class Program
             switch (opcao1)
             {
                 case 1:
-                    RetornaOpcoes(matriz1);
+                    RetornaOpcoes(matriz1);                    
                     break;
 
                 case 2:
@@ -53,19 +53,43 @@ internal class Program
                 case 4:                   
                     SelecionandoTorres(out t1, out t2);
                     conexoes = Conexoes(t1, t2, matriz1);
-                    Console.WriteLine($"Conexões entre torre {t1} e torre {t2}: {conexoes}\n");
+
+                    if (conexoes == 0)
+                        Console.WriteLine($"Não existe conexões entre torre {t1} e torre {t2}\n");
+                    else                    
+                        Console.WriteLine($"Conexões entre torre {t1} e torre {t2}: {conexoes}\n");                                        
+
                     break;
 
                 case 5:
                     SelecionandoTorres(out t1, out t2);
                     conexoes = Conexoes(t1, t2, matriz2);
-                    Console.WriteLine($"Conexões entre torre {t1} e torre {t2}: {conexoes}\n"); 
+
+                    int numVertices = matriz2.GetLength(0);
+
+                    int[] caminho = new int[numVertices];
+                    bool[] verticesVisitados = new bool[numVertices];
+
+                    caminho[0] = 0;
+                    verticesVisitados[0] = true;
+
+                    if (conexoes == 0)
+                        Console.WriteLine($"Não existe conexões entre torre {t1} e torre {t2}\n");
+                    else                    
+                        Console.WriteLine($"Conexões entre torre {t1} e torre {t2}: {conexoes}\n");                        
+                    
+                    
                     break; 
 
                 case 6:
                     SelecionandoTorres(out t1, out t2);
                     conexoes = Conexoes(t1, t2, matriz3);
-                    Console.WriteLine($"Conexões entre torre {t1} e torre {t2}: {conexoes}\n"); 
+
+                    if (conexoes == 0)
+                        Console.WriteLine($"Não existe conexões entre torre {t1} e torre {t2}\n");
+                    else
+                        Console.WriteLine($"Conexões entre torre {t1} e torre {t2}: {conexoes}\n");
+
                     break;
             }
         }
@@ -89,7 +113,7 @@ internal class Program
         {
             for (int j = 0; j < matriz.GetLength(1); j++)
             {
-                var conexoes = Conexoes(i, j, matriz);
+                var conexoes = Conexoes(i, j, matriz);                
                 Console.WriteLine($"{i,-6}|{j,-7}|{conexoes,-6}");
             }
         }
@@ -104,7 +128,7 @@ internal class Program
         {
             for (int j = 0; j < matriz.GetLength(1); j++)
             {
-                if (i == v1 && j == v2)
+                if (i == v1 - 1 && j == v2 - 1)
                     return matriz[i, j];
             }
         }
@@ -146,5 +170,6 @@ internal class Program
         }
 
         return aux;
-    }
+    }   
+    
 }
